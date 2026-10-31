@@ -1,0 +1,55 @@
+---
+title: "Homework1"
+author: "Mwizerwa Jacques"
+date: "2026-10-20"
+output: html_document
+---
+## HW1: Import data from Statistical package and from Database management systems
+#1. Import data from Statistical package.
+ 1.1 The name of data is AFFAIRS, the format is CSV from a built-in R dataset called data_class
+ 
+```{r}
+data_class <- read.table("C:\\Users\\HP\\Desktop\\R Programming\\Affairs.csv")
+```
+1.2 import SPSS data from my own file
+
+```{r}
+student_performance_raw<-read.csv("C:\\Users\\HP\\Desktop\\Database course\\student_performance_raw.csv")
+
+head(student_performance_raw,8)    # 8rows
+str(student_performance_raw)     # structure and variable type
+summary(student_performance_raw) #quick statistics
+```
+2. Import data from a database management system(DBMS)
+
+
+
+
+
+
+
+
+sav_file <- "https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/99cdae15c839bb4f94a23db4e47b4a4c590dec61/slim-2/slim-2.csv.sav"
+```
+
+
+
+```{r}
+```
+
+
+
+#2. Import data from Database management
+```{r}
+install.packages(c("DBI", "RSQLite"))
+```
+```{r}
+install.packages(foreign")
+install.packages("readxl") ,
+install.packages("DBI")
+install.packages("RSQLite")
+install.packages("readr")
+install.packages("jsonlite")
+install.packages("skimr")
+```
+
