@@ -3,15 +3,18 @@ title: "Homework1"
 author: "Mwizerwa Jacques"
 date: "2026-10-20"
 output: html_document
+
+ok
 ---
-## HW1: Import data from Statistical package and from Database management systems
+## HW1: Import data from Statistical package, from Database management systems and from an Internet URL
+
 #1. Import data from Statistical package.
- 1.1 The name of data is AFFAIRS, the format is CSV from a built-in R dataset called data_class
+##1.1 The name of data is AFFAIRS, the format is CSV from a built-in R dataset called data_class
  
 ```{r}
 data_class <- read.table("C:\\Users\\HP\\Desktop\\R Programming\\Affairs.csv")
 ```
-1.2 import SPSS data from my own file
+## 1.2 import SPSS data from my own file
 
 ```{r}
 student_performance_raw<-read.csv("C:\\Users\\HP\\Desktop\\Database course\\student_performance_raw.csv")
@@ -22,28 +25,49 @@ summary(student_performance_raw) #quick statistics
 ```
 2. Import data from a database management system(DBMS)
 
-
-
-
-
-
-
-
-sav_file <- "https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/99cdae15c839bb4f94a23db4e47b4a4c590dec61/slim-2/slim-2.csv.sav"
-```
-
-
+## Install.packages("RMariaDB") # Installation of the DB Package
 
 ```{r}
+library(DBI) #Provides common database functions
+library(RMariaDB) # this help to transfer data from  database into R for data science.
+library(rstudioapi) #Interacts with the RStudio application, including password prompts
+con <- dbConnect(
+  RMariaDB::MariaDB(),
+  host = "127.0.0.1",
+  port = 3306,
+  username = "root",
+  password = "",
+  dbname = "universitystudentdb"
+)
 ```
 
+# Displaying data form database
 
-
-#2. Import data from Database management
 ```{r}
-install.packages(c("DBI", "RSQLite"))
+
+students_List<- DBI::dbGetQuery(
+  con,
+  "SELECT * FROM student"
+)
+
+View(students_List)
 ```
+
+## 3. : Import from an Internet URL
+
+library(jsonlite)
+
+## Here we have json file from a URL
+
 ```{r}
+sales.data <- fromJSON("https://raw.githubusercontent.com/Kundan-Rwanda/sample-sales-data/refs/heads/main/sales.json",
+  flatten = TRUE)
+
+head(sales.data, 8)
+```
+
+install.packages("RMariaDB")
+
 install.packages(foreign")
 install.packages("readxl") ,
 install.packages("DBI")
@@ -51,5 +75,11 @@ install.packages("RSQLite")
 install.packages("readr")
 install.packages("jsonlite")
 install.packages("skimr")
-```
+
+NB: 
+
+## 1. For each source, We needed to show the import code, the output of head(), and  explaination of what is going on.
+## 2. First we needed to install packages and check their library to make sure they are well installed.
+## 3. If a package fails to load, check the spelling and make sure install.packages() was run first.
+
 
