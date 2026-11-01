@@ -150,9 +150,11 @@ view(data_class2)
 install.package("nycflights13")
 install.packages("tidyverse")
 install.packages("dplyr")
+install.packages("devtools")
 library(dplyr)
 library(tidyverse)
 library(nycflights13)
+library(devtools)
 ```
 
 ```{r}

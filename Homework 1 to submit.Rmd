@@ -65,6 +65,7 @@ sales.data <- fromJSON("https://raw.githubusercontent.com/Kundan-Rwanda/sample-s
 
 head(sales.data, 8)
 ```
+##packages installation
 
 install.packages("RMariaDB")
 
