@@ -3,8 +3,6 @@ title: "Homework1"
 author: "Mwizerwa Jacques"
 date: "2026-10-20"
 output: html_document
-
-ok
 ---
 ## HW1: Import data from Statistical package, from Database management systems and from an Internet URL
 
@@ -65,7 +63,6 @@ sales.data <- fromJSON("https://raw.githubusercontent.com/Kundan-Rwanda/sample-s
 
 head(sales.data, 8)
 ```
-##packages installation
 
 install.packages("RMariaDB")
 
@@ -82,5 +79,3 @@ NB:
 ## 1. For each source, We needed to show the import code, the output of head(), and  explaination of what is going on.
 ## 2. First we needed to install packages and check their library to make sure they are well installed.
 ## 3. If a package fails to load, check the spelling and make sure install.packages() was run first.
-
-
