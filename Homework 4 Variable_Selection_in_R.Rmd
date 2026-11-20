@@ -1,0 +1,146 @@
+---
+title: "VARIABLE SELECTION IN R"
+author: "Mwizerwa Jacques"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# 1. Introduction
+
+**Variable selection** is the process of choosing relevant independent variables (predictors) to include in a statistical model. 
+
+# 2. Load and Explore the Dataset
+
+First, we load the dataset and look at its contents to understand the type of information it contains.
+
+```{r}
+data(mtcars)        # Load the built-in mtcars dataset
+head(mtcars)        # To Display the first six rows
+str(mtcars)         # Check the structure of the dataset
+dim(mtcars)         # Check the number of rows and columns
+names(mtcars)       # Display the names of all variables
+```
+
+# 3. Build a Full Regression Model and display model results
+
+Before selecting variables, we first build a full regression model using all the available independent variables.
+
+```{r}
+# Build a full linear regression model
+model_full <- lm(mpg ~ wt + hp + disp + cyl + drat +
+                   qsec + gear + carb + vs + am,
+                 data = mtcars)
+
+# Display the model results
+summary(model_full)
+```
+
+# 4. Variable Selection Using P-values
+
+For this homework, we use 0.05 as our significance level.
+
+If the p-value is less than 0.05, the variable is statistically significant at the 5% level.
+
+If the p-value is greater than 0.05, there is not enough evidence to consider the variable statistically significant at that level.
+
+```{r}
+summary(model_full)$coefficients          # Display the coefficients and their p-values
+results <- summary(model_full)$coefficients    # Extract the regression results       
+p_values <- results[, 4]                       # Select only the p-value column
+p_values                                       # Display the p-values
+```
+
+# 5. Variable Selection Using Stepwise Regression
+
+In this example, we use both-direction selection. This means R can consider removing or adding variables during the selection process.
+
+## 5.1 Both-direction selection
+
+```{r}
+model_selected <- step(model_full, direction = "both")  # Perform stepwise regression
+```
+
+- `direction = "backward"`: starts with the full model and considers removing predictors.
+- `direction = "forward"`: starts with a simpler model and considers adding predictors.
+- `direction = "both"`: considers adding or removing predictors during the search.
+
+## 5.2 View the selected model
+
+```{r}
+summary(model_selected)           # Display the selected model results
+```
+
+## 5.3 Display the variable selected by R
+
+We can use the formula() function to see the final regression formula.
+
+```{r}
+formula(model_selected)       # Display the final selected formula
+```
+ NB: This is useful because it shows us the variables that R selected for the final model.
+ 
+## 5.4 Display the Selected Variables Separately
+
+```{r}
+names(coef(model_selected))          # Get the names of the selected variables
+```
+ 
+# 6. Compare the Full and Selected Models
+
+Here, We will use AIC for this comparison.
+```{r}
+AIC(model_full, model_selected)          # Compare the AIC values of both models
+```
+
+AIC balances model fit and complexity, so when comparing the Full and Selected Models on the same data, the lower AIC is generally preferred, though this does not prove the model is correct.
+# 7. Visualize the Selected Model Diagnostics
+
+```{r}
+
+par(mfrow = c(2, 2))         # Display four diagnostic plots
+plot(model_selected)
+par(mfrow = c(1, 1))         # Return to the normal plotting layout
+```
+
+These 4 plots help assess regression assumptions, including linearity, residual distribution, constant variance, and potentially influential observations.
+
+# 8. Complete R Code
+
+Below is the complete code used in this homework. It can be copied and executed in RStudio.
+
+```{r}
+data(mtcars)                          # 1. Load the dataset
+head(mtcars)                          # 2. Explore the dataset
+str(mtcars)
+dim(mtcars)
+names(mtcars)
+colSums(is.na(mtcars))                # 3. Check missing values
+model_full <- lm(mpg ~ wt + hp + disp + cyl + drat +
+                   qsec + gear + carb + vs + am,
+                 data = mtcars)                   # 4. Build the full regression model
+summary(model_full)                               # 5. Display the full model results
+results <- summary(model_full)$coefficients       # 6. Extract and display p-values
+p_values <- results[, 4]
+p_values
+model_selected <- step(model_full, direction = "both")  
+# 8. Display the selected model
+summary(model_selected)
+formula(model_selected)                     # 9. Display the selected formula
+names(coef(model_selected))                 # 10. Display the selected variables
+AIC(model_full, model_selected)             # 11. Compare the two models
+par(mfrow = c(2, 2))                        # 12. Display diagnostic plots
+plot(model_selected)
+par(mfrow = c(1, 1))
+```
+
+# 9. Conclusion
+
+In this homework, I have learned how to perform variable selection using R and the mtcars dataset.
+
+First, I explored the dataset and built a full regression model to understand the relationship between car characteristics and fuel efficiency.
+
+Next, I examined p-values to understand the statistical significance of the predictors. I also used stepwise regression to identify a smaller set of variables using the AIC criterion.
+
+Finally, I compared the full and selected models and used diagnostic plots to examine the quality of the selected model.
+
+From this exercise, I have learned that variable selection is important because it helps us build simpler models, avoid unnecessary variables, and better understand the factors that influence the results we want to predict.
